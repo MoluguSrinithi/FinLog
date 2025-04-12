@@ -1,15 +1,21 @@
+
 from flask import Flask, render_template, request, redirect, url_for
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 from datetime import datetime
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv()
 
 app = Flask(__name__)
 
-# MySQL Configuration
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
-app.config['MYSQL_DB'] = 'expense_db'
+# MySQL Configuration from .env
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
 
 mysql = MySQL(app)
 
@@ -77,7 +83,7 @@ def add_expense():
         mysql.connection.commit()
         cur.close()
         return redirect(url_for('index'))
-    
+
     return render_template("add_expense.html", categories=CATEGORIES)
 
 if __name__ == '__main__':
