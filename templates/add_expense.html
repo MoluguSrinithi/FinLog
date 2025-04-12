@@ -1,0 +1,35 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Expense - FinLog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2 class="add-heading">➕ Add New Expense</h2>
+
+        <form method="POST" action="{{ url_for('add_expense') }}" class="form-container">
+            <label for="category">Category:</label>
+            <select name="category" required>
+                {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="note">Note:</label>
+            <input type="text" name="note" required>
+
+            <label for="amount">Amount:</label>
+            <input type="number" name="amount" step="0.01" required>
+
+            <label for="date">Date:</label>
+            <input type="date" name="date" required>
+
+            <input type="submit" value="Add Expense">
+        </form>
+
+        <a href="{{ url_for('index') }}" class="back-button">← Back to Dashboard</a>
+    </div>
+</body>
+</html>
